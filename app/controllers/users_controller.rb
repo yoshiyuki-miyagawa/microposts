@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @pagy, @microposts = pagy(@user.microposts.order(id: :desc))
     counts(@user)
+    
   end
 
   def new
@@ -26,6 +27,21 @@ class UsersController < ApplicationController
       render :new
     end
   end
+  
+  def destroy 
+    @user = User.find_by(id: params[:id])
+    @microposts = Micropost.find_by(user_id: params[:id])
+    flash[:success] = "ユーザーを削除しました"
+
+    if @microposts.nil?
+      @user.destroy
+      redirect_to("/")
+    else
+      @microposts.destroy
+      @user.destroy
+      redirect_to("/")
+    end
+  end 
 
   def followings
     @user = User.find(params[:id])
@@ -37,6 +53,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @pagy, @followers = pagy(@user.followers)
     counts(@user)
+  end
+  
+  
+  def likes
+    @user = User.find(params[:id])
+    @pagy, @likes = pagy(@user.likes)
   end
 
   private
