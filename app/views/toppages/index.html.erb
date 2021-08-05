@@ -3,7 +3,7 @@
         <aside class="col-sm-4">
             <%= form_with(model: @micropost) do |f| %>
                 <div class="mb-3">
-                    <%= f.text_area :content, class: 'form_control', row: 5 %>
+                    <%= f.text_area :content, class: 'form_control', rows: 5 %>
                 </div>
                 <%= f.submit 'Post', class: 'btn btn-primary w-100' %>
             <% end %>
